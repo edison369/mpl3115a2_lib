@@ -6,7 +6,7 @@
  * @ingroup I2CSensorMPL3115A2
  */
 
-#include "mpl3115a2.h"
+#include "mpl3115a2_version.h"
 #include "mpl3115a2_internal.h"
 
 const char bus_path[] = "/dev/i2c-2";
@@ -40,7 +40,7 @@ int32_t MPL3115A2_Init(void){
     /* ensure termination */
     MPL3115A2_Buffer[sizeof(MPL3115A2_Buffer) - 1] = 0;
 
-    OS_printf("SENSOR MPL3115A2 Lib Initialized.\n");
+    OS_printf("MPL3115A2 Lib Initialized.%s\n", MPL3115A2_VERSION);
 
     return CFE_SUCCESS;
 }
