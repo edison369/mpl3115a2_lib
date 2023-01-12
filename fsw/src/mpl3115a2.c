@@ -21,6 +21,9 @@ MPL3115A2_Data_t MPL3115A2_Data;
 *************************************************************************/
 char MPL3115A2_Buffer[MPL3115A2_BUFFER_SIZE];
 
+/*************************************************************************
+** Private functions
+*************************************************************************/
 int32_t MPL3115A2_Init(void){
   /*
     * Call a C library function, like strcpy(), and test its result.
@@ -40,12 +43,11 @@ int32_t MPL3115A2_Init(void){
     /* ensure termination */
     MPL3115A2_Buffer[sizeof(MPL3115A2_Buffer) - 1] = 0;
 
-    OS_printf("MPL3115A2 Lib Initialized.%s\n", MPL3115A2_VERSION);
+    OS_printf("MPL3115A2 Lib Initialized.%s\n", MPL3115A2_VERSION_STRING);
 
     return CFE_SUCCESS;
 }
 
-// Internal functions
 int read_bytes(int fd, uint16_t i2c_address, uint8_t data_address, uint16_t nr_bytes, uint8_t **buff){
   int rv;
   uint8_t value[nr_bytes];
@@ -331,7 +333,9 @@ void sensor_mpl3115a2_setMode(mpl3115a2_mode_t mode){
   MPL3115A2_Data.currentMode = mode;
 }
 
-// Public functions
+/*************************************************************************
+** Public functions
+*************************************************************************/
 int i2c_dev_register_sensor_mpl3115a2(const char *bus_path, const char *dev_path){
   i2c_dev *dev;
 
@@ -378,9 +382,11 @@ void sensor_mpl3115a2_setAltitudeOffset(int8_t offset){
   sensor_mpl3115a2_set_reg_8(MPL3115A2_OFF_H, (uint8_t)(offset));
 }
 
-// Set the local sea level pressure in hPa
 void sensor_mpl3115a2_setSeaPressure(float SLP){
-
+  /* Set the local sea level pressure in hPa
+  ** In the datasheet it says: Value is input in 2 Pa units.
+  ** SLP * 100 to change from hPa to Pa and divide by 2 to get 2 Pa units
+  */
   uint16_t bar = SLP * 50;
 
   // write result to register

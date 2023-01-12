@@ -127,11 +127,12 @@ typedef enum {
 *************************************************************************/
 int32 MPL3115A2_Init(void);
 
+/*************************************************************************
+** Public Function Prototypes
+*************************************************************************/
 int i2c_dev_register_sensor_mpl3115a2(const char *bus_path, const char *dev_path);
 int sensor_mpl3115a2_begin(int fd);
 
-
-// I2C functions
 float sensor_mpl3115a2_getPressure(void);
 float sensor_mpl3115a2_getAltitude(void);
 int8_t sensor_mpl3115a2_getAltitudeOffset(void);
@@ -139,7 +140,5 @@ void sensor_mpl3115a2_setAltitudeOffset(int8_t offset);
 void sensor_mpl3115a2_setSeaPressure(float SLP);
 
 float sensor_mpl3115a2_getTemperature(void);
-
-/** @} */
 
 #endif /* _DEV_I2C_SENSOR_MPL3115A2_H */
