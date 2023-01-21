@@ -193,8 +193,6 @@ int sensor_mpl3115a2_ioctl(i2c_dev *dev, ioctl_command_t command, void *arg){
 }
 
 bool begin(void) {
-  uint8_t *tmp;
-  tmp = NULL;
 
   // Sanity check
   uint8_t *whoami;
@@ -203,12 +201,6 @@ bool begin(void) {
   if ((*whoami) != 0xC4) {
     return false;
   }
-
-  // Software reset
-  sensor_mpl3115a2_set_reg_8(MPL3115A2_CTRL_REG1, MPL3115A2_CTRL_REG1_RST);
-  sensor_mpl3115a2_get_reg_8(MPL3115A2_CTRL_REG1, &tmp);
-  while ((*tmp) & MPL3115A2_CTRL_REG1_RST)
-    OS_TaskDelay(10);
 
   // Set oversampling and altitude mode
   MPL3115A2_Data.currentMode = MPL3115A2_ALTIMETER;

@@ -16,10 +16,6 @@
  * limitations under the License.
  ************************************************************************/
 
-/**
- * @file
- *  An example of an internal (private) header file for SAMPLE Lib
- */
 #ifndef MPL3115A2_INTERNAL_H
 #define MPL3115A2_INTERNAL_H
 
